@@ -15,7 +15,8 @@ def punct_and_words(character_list, pos_file):
     word_count = words in sentence (resets to zero after a period).
     total_words is the book's total word count.
     """
-    punct = set(string.punctuation.replace('\\', '').replace('|', '').replace("'", ''))
+    punct = ['!','#','"','%','$','&','(',')','+','*','-',',','/','.',';',
+             ':','=','<','?','>','@','[',']','_','^','`','{','}','~', "'"]
 
     punctuation_dict = defaultdict(int)
     period_count = 0
@@ -43,7 +44,7 @@ def punct_and_words(character_list, pos_file):
     for p in punct:
         s = ""
         if p in punctuation_dict:
-            s = s + str(punctuation_dict[p] / punct_count) + "|"  # ratio of punct that is [x]
+            s = s + str(punctuation_dict[p] / punct_count) + "|"  # ratio of punct of all punct
         else:
             s = s + str(0) + "|"  # 0 if unused
         pos_file.write(s)
@@ -75,14 +76,18 @@ def get_author(book_title):
                  'Iris Murdoch': ['TheSandcastle',
                                   'TheBlackPrince',
                                   'JacksonsDilemma'],
-                 'P.D. James': ['DevicesAndDesires',
-                                'DeathComesToPemberley',
-                                'CoverHerFace']
+                 'P.D. James': ['CoverHerFace',
+                                'DevicesAndDesires',
+                                'DeathComesToPemberley']
                  }
 
     for author, books in book_list.items():
-        if book_title in books:
-            return author
+        if book_title in books and books[0] == book_title:
+            return author, 'first'
+        if book_title in books and books[1] == book_title:
+            return author, 'second'
+        if book_title in books and books[2] == book_title:
+            return author, 'third'
 
 
 def pos_tagging(content, pos_file):
@@ -127,9 +132,9 @@ def preprocessing():
     pos_file = open("data/processed/output_POS.txt", 'a')
 
     # check avg sent size
-    pos_file.write("Author|Title|book_name|total_words|avg_sentence_size|"
+    pos_file.write("Author|Title|book_order|total_words|avg_sentence_size|"
                          + "!|#|\"|%|$|&|(|)|+|*|-|,|/|.|;|:|=|<|?|>|"
-                         + "@|[|]|_|^|`|{|}|~|neg|neu|pos|compound|"
+                         + "@|[|]|_|^|`|{|}|~|\'|neg|neu|pos|compound|"
                          + "CC|CD|DT|EX|FW|IN|JJ|JJR|JJS|"
                          + "LS|MD|NN|NNP|NNPS|NNS|PDT|PRP|PRP$|RB|RBR|"
                          + "RBS|RP|VB|VBD|VBG|VBP|VBN|WDT|VBZ|WRB|WP$|WP|")
@@ -141,9 +146,9 @@ def preprocessing():
         book_file = str(book)
         book_name = re.sub(r'(James_|Murdoch_|Christie_|\.txt)*', '', book_file)
         title = re.sub("([a-z])([A-Z])", "\g<1> \g<2>", book_name)
-        author = get_author(book_name)
+        author, order = get_author(book_name)
         pos_file.write(author + "|" + title + "|" )
-        pos_file.write(book_name + "|")
+        pos_file.write(order + "|")
 
         with open("data/interim/" + book_file, 'r') as f:
             content = f.read().rstrip('\n')
