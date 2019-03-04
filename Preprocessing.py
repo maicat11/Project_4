@@ -1,3 +1,6 @@
+# inspired by getenburg project
+# https://github.com/jldbc/gutenberg/blob/master/preprocessing.py
+
 import numpy as np
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk import tokenize
@@ -50,16 +53,16 @@ def punct_and_words(character_list, pos_file):
         pos_file.write(s)
 
 
-def get_sentiment(temp):
-    temp = temp.replace('\n', '')
-    temp = temp.replace('\r', '')
+def get_sentiment(content):
+    content = content.replace('\n', '')
+    content = content.replace('\r', '')
     # tokenize sentences
-    content = tokenize.sent_tokenize(temp)
+    sentences = tokenize.sent_tokenize(content)
 
     # get author and title now that content is split by sentence
     sid = SentimentIntensityAnalyzer()
     booksent = []
-    for sentence in content:
+    for sentence in sentences:
         ss = sid.polarity_scores(sentence)
         ssarray = [ss['neg'], ss['neu'], ss['pos'], ss['compound']]
         booksent.append(ssarray)
@@ -83,11 +86,11 @@ def get_author(book_title):
 
     for author, books in book_list.items():
         if book_title in books and books[0] == book_title:
-            return author, 'first'
+            return author, 1
         if book_title in books and books[1] == book_title:
-            return author, 'second'
+            return author, 2
         if book_title in books and books[2] == book_title:
-            return author, 'third'
+            return author, 3
 
 
 def pos_tagging(content, pos_file):
@@ -123,7 +126,6 @@ def pos_tagging(content, pos_file):
 def preprocessing():
     '''
     read file as a list of words
-    set lowercase, stem, remove stopwords???
     get punctuation string for later feature extraction
     save local wordcount dict???
     save global word dict after finished looping through docs???
@@ -144,11 +146,11 @@ def preprocessing():
 
     for book in os.listdir("data/interim"):
         book_file = str(book)
-        book_name = re.sub(r'(James_|Murdoch_|Christie_|\.txt)*', '', book_file)
+        book_name = re.sub(r'(James[0-9]_|Murdoch[0-9]_|Christie[0-9]_|\.txt)*', '', book_file)
         title = re.sub("([a-z])([A-Z])", "\g<1> \g<2>", book_name)
         author, order = get_author(book_name)
         pos_file.write(author + "|" + title + "|" )
-        pos_file.write(order + "|")
+        pos_file.write(str(order) + "|")
 
         with open("data/interim/" + book_file, 'r') as f:
             content = f.read().rstrip('\n')
