@@ -67,20 +67,20 @@ The following "features" were extracted from 9 novels (3 each per author).
 
 Much time was spent on going through all of the parts of speech and punctuation in hopes of discovering either an increase or decrease in usage.  For example, the below graph demonstrates usage of exclamation points and its trend over the 3 books per author.  I honed in on the parts of speech that had the most significant increase/decrease and made an attempt to determine if these changes were statistically significant using a **chi squared** test.  All seemed to result in low p-values that were suspiciously statistically significant. 
 
-![image-20190304133959485](/Users/maileivargas/Library/Application Support/typora-user-images/image-20190304133959485.png)
+![Screen Shot 2019-05-15 at 2 26 08 PM](https://user-images.githubusercontent.com/20651507/57810805-8a539080-771d-11e9-8e0e-f51683eb2b8d.png)
 
 
 
 
 I compared the length of the words used and the frequency of use over time and  created a heatmap in order to see any differences.  It appears that the last row of words of length 16 characters shows a decline for the two authors who did have Alzheimers and an increase for the author who did not. This is not necessarily significant, but still interesting to note.
 
-### ![image-20190304135337193](/Users/maileivargas/Library/Application Support/typora-user-images/image-20190304135337193.png)
+![Screen Shot 2019-05-15 at 2 26 24 PM](https://user-images.githubusercontent.com/20651507/57810809-8c1d5400-771d-11e9-8d1a-fe442f04b89d.png)
 
 
 
 Another interesting thing to note is the increase of usage in may **indefinite pronouns** which according to the research is apparent in Alzheimers patients.  In this example, the word "something" has a significant increase in usage amongst authors Christie and Murdoch, but is barely used in P.D. James' novels.  Other indefinite pronouns also demonstrate an increase in usage. 
 
-![image-20190304140819536](/Users/maileivargas/Library/Application Support/typora-user-images/image-20190304140819536.png)
+![Screen Shot 2019-05-15 at 2 26 37 PM](https://user-images.githubusercontent.com/20651507/57810810-8de71780-771d-11e9-89a6-158c810997f0.png)
 
 
 
@@ -112,12 +112,10 @@ The top 20 terms of the "topics" are listed below.
 ['arnold', 'back', 'door', 'room', 'went', 'saw', 'long', 'seemed', 'towards', 'mor', 'asked', 'two', 'carter', 'head', 'time', 'one', 'eyes', 'miss carter', 'miss', 'white']
 ```
 
-![image-20190304142525161](/Users/maileivargas/Library/Application Support/typora-user-images/image-20190304142525161.png)
+![Screen Shot 2019-05-15 at 2 26 55 PM](https://user-images.githubusercontent.com/20651507/57810814-8fb0db00-771d-11e9-82e2-9996c4dfafb5.png)
 
 
-
-
-### 
+ 
 
 ### Given more time...
 
